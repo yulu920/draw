@@ -1,0 +1,68 @@
+			*{
+				margin:0;
+				padding: 0;
+				box-sizing: border-box;
+				}
+		   body{
+			   width: 100vw;
+			   height: 100vh;
+			   display: flex;
+			    flex-direction: column;
+				justify-content: flex-start;
+		   }
+		   .caidan{
+			   height: 100px;
+			   width: 100%;
+			   display: flex;
+			   border-bottom: 3px solid #333333;
+			   justify-content: space-around;
+			   align-items: center;
+		   }
+		   #canvas{
+			   flex: 1;
+			   width: 100vw;
+		   }
+		   .btn,.btn1{
+			   width: 200px;
+			   height: 60px;
+			   border: 1px solid #CCCCCC;
+			   border-radius: 20px;
+			   text-align: center;
+			   line-height: 60px;
+			   font-size: 20px;
+			   color: #999999;
+			   background-position: center;
+			   background-repeat: no-repeat;
+			   background-size: auto 100%; 
+		   }
+		   .btn.active,.btn1.active{
+			   box-shadow: 0 0 20px deepskyblue;
+			   border: #00BFFF;
+		   }
+		  .line{
+			 display: flex; 
+			 justify-content: center;
+			 align-items: center;
+		  }
+		  .line.xi::after{
+			  content: "";
+			  background: black;
+			  width: 6px;
+			  height: 6px;
+			  border-radius: 3px;
+		  }
+		  .line.normal::after{
+			  content: "";
+			  background: black;
+			  width: 16px;
+			  height: 16px;
+			  border-radius: 8px;
+		  }
+		  .line.cu::after{
+		  			  content: "";
+		  			  background: black;
+		  			  width: 32px;
+		  			  height: 32px;
+		  			  border-radius: 16px;
+		  }
+		   

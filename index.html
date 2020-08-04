@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<link rel="stylesheet" type="text/css" href="css/style2.css"/>
+		<link rel="stylesheet" type="text/css" href="css/alert.css"/>
+		<script src="js/alert.js" type="text/javascript" charset="utf-8"></script>
+		
+	</head>
+	<body>
+		<div class="caidan">
+			<div class="btn" id="huabi" style="background-image: url(img/huabi.png);"></div>
+			<div class="btn" id="rect" style="background-image: url(img/rect.png);"></div>
+			<div class="btn" id="circle" style="background-image: url(img/circle.png);"></div>
+			<div class="btn download">下载图片</div>
+			<div class="btn download2" style="display: none;">
+				<a  href="" download="download">下载</a>
+			</div>
+			<div class="btn" id="cachu">橡皮擦</div>
+			<div class="btn1 line xi "></div>
+			<div class="btn1 line normal "></div>
+			<div class="btn1 line cu "></div>
+			<div class="btn"><input type="color" name="color" id="color" value="" /></div>
+		</div>
+		<canvas id="canvas" ></canvas>
+		<script type="text/javascript">
+			var allBtn=document.querySelectorAll(".btn");
+			var allLineDivs=document.querySelectorAll(".line");
+			var canvas=document.querySelector("#canvas");
+			var ctx=canvas.getContext('2d');
+			var rectBtn=document.querySelector("#rect");
+			var circleBtn=document.querySelector("#circle");
+			var xiBtn=document.querySelector(".xi");
+			var norBtn=document.querySelector(".normal");
+			var cuBtn=document.querySelector(".cu");
+			var huaban={
+				type:"none",
+				isDraw:false,
+				beginX:0,
+				beginY:0,
+				lineWidth:6,
+				color:"black",
+				imgData:null,
+				huabiFn:function(e){
+					var x=e.pageX-canvas.offsetLeft;
+					var y=e.pageY-canvas.offsetTop;
+					ctx.clearRect(0,0,canvas.offsetWidth,canvas.offsetHeight);
+					if(huaban.imgData!=null){
+						ctx.putImageData(huaban.imgData,0,0,0,0,canvas.offsetWidth,canvas.offsetHeight);
+					}
+					ctx.lineTo(x,y);
+					ctx.lineWidth=huaban.lineWidth;
+					ctx.strokeStyle=huaban.color;
+					ctx.stroke();
+					},
+				rectFn:function(e){
+					var x=e.pageX-canvas.offsetLeft;
+					var y=e.pageY-canvas.offsetTop;
+					
+					ctx.clearRect(0,0,canvas.offsetWidth,canvas.offsetHeight);
+					if(huaban.imgData!=null){
+						ctx.putImageData(huaban.imgData,0,0,0,0,canvas.offsetWidth,canvas.offsetHeight);
+					}
+					ctx.beginPath();
+					ctx.rect(huaban.beginX,huaban.beginY,x-huaban.beginX,y-huaban.beginY)
+					ctx.lineWidth=huaban.lineWidth;
+					ctx.strokeStyle=huaban.color;
+					ctx.stroke();
+					ctx.closePath();
+				},
+				circleFn:function(e){
+					var x=e.pageX-canvas.offsetLeft;
+					var y=e.pageY-canvas.offsetTop;
+					ctx.clearRect(0,0,canvas.offsetWidth,canvas.offsetHeight);
+					if(huaban.imgData!=null){
+						ctx.putImageData(huaban.imgData,0,0,0,0,canvas.offsetWidth,canvas.offsetHeight);
+					}
+					var cx=(x+huaban.beginX)/2;
+					var cy=(y+huaban.beginY)/2;
+					var xr=Math.abs(x-huaban.beginX)/2
+					var yr=Math.abs(y-huaban.beginY)/2
+					ctx.beginPath();
+					ctx.ellipse(cx,cy,xr,yr,0,0,Math.PI*2)
+					ctx.lineWidth=huaban.lineWidth;
+					ctx.strokeStyle=huaban.color;
+					ctx.stroke();
+					ctx.closePath();
+				},
+				cachuFn:function(e){
+					var x=e.pageX-canvas.offsetLeft;
+					var y=e.pageY-canvas.offsetTop;
+					ctx.beginPath()
+					ctx.globalCompositeOperation = "destination-out"
+					ctx.arc(x,y,20,0,2*Math.PI)
+					ctx.fill()
+					ctx.closePath()
+				}
+				
+			}
+			canvas.setAttribute("width",canvas.offsetWidth)
+			canvas.setAttribute("height",canvas.offsetHeight)
+			var huabiBtn=document.querySelector("#huabi");
+			huabiBtn.onclick=function(){
+				allBtn.forEach(function(item,i){
+					item.classList.remove("active")
+				})
+				huabiBtn.classList.add("active")
+				huaban.type="huabi";
+			}
+			
+			
+			rectBtn.onclick=function(){
+					allBtn.forEach(function(item,i){
+						item.classList.remove("active")
+					})
+					rectBtn.classList.add("active")
+					huaban.type="rect";
+		    }
+			circleBtn.onclick=function(){
+				allBtn.forEach(function(item,i){
+					item.classList.remove("active")
+				})
+				circleBtn.classList.add("active")
+				huaban.type="circle";
+			}
+			xiBtn.onclick=function(){
+				allLineDivs.forEach(function(item,i){
+					item.classList.remove("active")
+				})
+				xiBtn.classList.add("active")
+				huaban.lineWidth=6;
+			}
+			norBtn.onclick=function(){
+				allLineDivs.forEach(function(item,i){
+					item.classList.remove("active")
+				})
+				norBtn.classList.add("active")
+				huaban.lineWidth=16;
+			}
+			cuBtn.onclick=function(){
+				allLineDivs.forEach(function(item,i){
+					item.classList.remove("active")
+				})
+				cuBtn.classList.add("active")
+				huaban.lineWidth=32;
+			}
+			
+			
+			var colorInput=document.querySelector("#color");
+			colorInput.onchange=function(e){
+				var color=colorInput.value;
+				huaban.color=color;
+			}
+			canvas.onmousedown=function(e){
+				huaban.isDraw=true;
+				if(huaban.type=="rect")
+				{
+					var x=e.pageX-canvas.offsetLeft;
+					var y=e.pageY-canvas.offsetTop;
+					huaban.beginX=x;
+					huaban.beginY=y;
+				}
+				if(huaban.type=="huabi"){
+					var x = e.pageX - canvas.offsetLeft;
+					var y = e.pageY - canvas.offsetTop;
+					huaban.beginX = x;
+					huaban.beginY = y;
+					ctx.beginPath()
+					ctx.moveTo(x,y)
+				}
+				if(huaban.type=="circle")
+				{
+					var x=e.pageX-canvas.offsetLeft;
+					var y=e.pageY-canvas.offsetTop;
+					huaban.beginX=x;
+					huaban.beginY=y;
+				}
+				if(huaban.type!="cachu"){
+					ctx.globalCompositeOperation = "source-over"
+				}
+			}
+			canvas.onmouseup=function(){
+				huaban.isDraw=false;
+				huaban.imgData = ctx.getImageData(0,0,canvas.offsetWidth,canvas.offsetHeight)
+				if(huaban.type=="huabi"){
+					ctx.closePath();
+				}
+				
+			}
+			canvas.onmousemove=function(e){
+				
+				
+				if(huaban.isDraw){
+					huaban[huaban.type+'Fn'](e);
+					//console.log(huaban.type+'Fn');
+					
+				}
+			}
+			var downloadBtn=document.querySelector(".download");
+			//使用toDataURL找到图片地址
+			downloadBtn.onclick=function(e){
+			  var url = canvas.toDataURL()
+			  var img = new Image()
+			  img.src = url;
+			  var aDom = document.querySelector(".download2 a")
+			  newalert({
+			  	title:"下载图标",
+			  	content:"<img style='width:auto;height:230px;' src='"+url+"'/>",
+			  	confirmFn:function(){
+			  		
+			  		aDom.setAttribute("href",url);
+			  		//自动触发点击事件
+			  		aDom.click()
+			  	},
+			  })
+			}
+			
+			var cachuBtn=document.querySelector("#cachu");
+			cachuBtn.onclick=function(e){
+				allBtn.forEach(function(item,i){
+					item.classList.remove("active")
+				})
+				cachuBtn.classList.add("active")
+				huaban.type="cachu";
+				
+			}
+		</script>
+	</body>
+</html>

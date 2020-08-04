@@ -1,0 +1,71 @@
+*{
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box; 
+	/* 允许存在两个并排的框 */
+}
+
+.zhezhao{
+	position: fixed;
+    left: 0;
+	top: 0;
+	height: 100vh;
+	width: 100vw;
+	background-color: rgba(0,0,0,0.5);
+	display: flex;
+	align-items: center;      /* 设置弹性盒子元素在垂直方向上（纵轴）的对齐方式。 */
+	justify-content: center;  /*  设置弹性盒子元素在主轴（横轴）的对齐方式。 */
+}
+.alert{
+	width: 600px;
+	height: 400px;
+	background: #fff;
+	display: flex;
+	flex-direction: column;
+}
+.alert>.header{
+	height: 80px;
+	line-height: 80px;
+	border-bottom: 1px solid #ccc;
+	display: flex;
+	justify-content: space-between;
+	padding: 0px 40px;
+}
+.alert>.header>.title{
+	font-size: 20px;
+	font-weight: 900;
+}
+.alert>.header>.close{
+	font-size: 30px;
+	font-weight: 100;
+	color: #ccc;
+}
+.alert>.header>.close:hover{
+	color: firebrick;
+}
+.alert>.main{
+	flex: 1; /* 代表均匀分配元素 */
+	padding: 30px;
+	border-bottom: 1px solid #ccc;
+}
+.alert>.btnList{
+	height: 80px;
+	display: flex;
+    justify-content: center;
+	align-items: center;
+	padding: 0 30px;
+}
+.alert>.btnList>.btn{
+	height: 50px;
+	width: 120px;
+	text-align: center;
+	line-height: 50px;
+	color: #fff;
+	margin: 10px;
+}
+.alert>.btnList>.btn:nth-child(1){
+	background: coral;
+}
+.alert>.btnList>.btn:nth-child(2){
+	background: #999;
+}
